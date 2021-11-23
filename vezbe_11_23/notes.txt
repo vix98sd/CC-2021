@@ -1,0 +1,29 @@
+Vagrant cloug - image repository za vagrant
+    https://app.vagrantup.com/boxes/search
+hashicorp - official vagrant images
+
+Komande:
+podizanje:
+    vagrant up
+
+reload:
+    vagrant reload
+
+zaustavljanje
+    vagrant suspend - pauzira izvršavanje VM i pamti njeno stanje
+    vagrant halt    - radi graceful shutdown VM i stanje se gubi (ako ne može graceful, ubija ga)
+
+ssh povezivanje (default password je vagrant):
+    vagrant ssh
+    (Ctrl + D prekida konekciju)
+
+Provisioning - šta će se dodatno izvršiti prilikom podizanja VM (https://www.vagrantup.com/docs/provisioning):
+    config.vm.provision "shell", path: "script.sh" - pokretanje skripte
+    config.vm.provision "file", source: "~/.gitconfig", destination: ".gitconfig" - prebacivanje fajla
+    - pomocu ove dve komande je moguce prebaciti projekat u VM, te ga nakon toga pokrenuti pomocu skripte 
+    - od nas ce se ocekivati da alate ne instaliramo rucno (poetry, postgres i ostalo), vec preko skripte 
+
+podizanje sa provisioning-om:
+    vagrant up --provision
+
+DODATNO: Proveriti kako prosiriti VM, kako joj dodati vise RAM-a, CPU-a, itd.
