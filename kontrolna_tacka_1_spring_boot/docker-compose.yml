@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.3"
 services:
   cloud-project-postgres:
     container_name: cloud-project-postgres
@@ -9,13 +9,14 @@ services:
       - cloud-project-network
     environment:
       - POSTGRES_DB=cloud_project_db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
 
   cloud-project-webapp:
     container_name: cloud-project-webapp
     build:
-      dockerfile: webapp/Dockerfile
+      context: webapp
+      dockerfile: Dockerfile
     image: cloud-project-webapp:1.1
     ports: 
       - 8080:8080
@@ -25,7 +26,8 @@ services:
       - cloud-project-postgres
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://cloud-project-postgres:5432/cloud_project_db
-      # - CMDERY_ROOTY=${CMDER_ROOT}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
 
 networks:
   cloud-project-network:
