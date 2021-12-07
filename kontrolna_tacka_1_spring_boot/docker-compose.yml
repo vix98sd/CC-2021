@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  cloud-project-postgres:
+    container_name: cloud-project-postgres
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    networks:
+      - cloud-project-network
+    environment:
+      - POSTGRES_DB=cloud_project_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+
+  cloud-project-webapp:
+    container_name: cloud-project-webapp
+    build:
+      dockerfile: webapp/Dockerfile
+    image: cloud-project-webapp:1.1
+    ports: 
+      - 8080:8080
+    networks:
+      - cloud-project-network
+    depends_on:
+      - cloud-project-postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://cloud-project-postgres:5432/cloud_project_db
+      # - CMDERY_ROOTY=${CMDER_ROOT}
+
+networks:
+  cloud-project-network:
+    driver: bridge
