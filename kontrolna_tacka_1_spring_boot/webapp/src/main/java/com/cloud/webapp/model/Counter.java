@@ -17,13 +17,13 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class Counter {
     @Id
     @SequenceGenerator(
-            name = "person_sequence",
-            sequenceName = "person_sequence",
+            name = "counter_sequence",
+            sequenceName = "counter_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = SEQUENCE,
-            generator = "person_generator"
+            generator = "counter_sequence"
     )
     private Integer id;
     private String method;
