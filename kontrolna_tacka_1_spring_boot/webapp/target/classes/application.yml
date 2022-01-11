@@ -17,3 +17,5 @@ server:
     include-message: always
     include-binding-errors: always
   port: 8080
+
+hello-message: ${HELLO_MESSAGE}

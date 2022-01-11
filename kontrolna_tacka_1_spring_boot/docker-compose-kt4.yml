@@ -1,0 +1,72 @@
+version: "3.3"
+services:
+  cloud-project-postgres:
+    container_name: cloud-project-postgres
+    image: postgres:alpine
+    volumes:
+      - cloud-project-postgres-data:/var/lib/postgresql/data
+    networks:
+      - cloud-project-network
+    environment:
+      - POSTGRES_DB=cloud_project_db
+      - POSTGRES_USER=kt3_username
+      - POSTGRES_PASSWORD=kt3_password
+
+  cloud-project-webapp:
+    container_name: cloud-project-webapp
+    build:
+      context: webapp
+      dockerfile: Dockerfile
+    image: cloud-project-webapp:1.1
+    ports: 
+      - 8080:8080
+    networks:
+      - cloud-project-network
+    depends_on:
+      - cloud-project-postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://cloud-project-postgres:5432/cloud_project_db
+      - SPRING_DATASOURCE_USERNAME=kt3_username
+      - SPRING_DATASOURCE_PASSWORD=kt3_password
+      - HELLO_MESSAGE=Hello from app 1
+
+  cloud-project-postgres-2:
+    container_name: cloud-project-postgres-2
+    image: postgres:alpine
+    volumes:
+      - cloud-project-postgres-data-2:/var/lib/postgresql/data
+    networks:
+      - cloud-project-network
+    environment:
+      - POSTGRES_DB=cloud_project_db
+      - POSTGRES_USER=kt3_username
+      - POSTGRES_PASSWORD=kt3_password
+
+  cloud-project-webapp-2:
+    container_name: cloud-project-webapp-2
+    build:
+      context: webapp
+      dockerfile: Dockerfile
+    image: cloud-project-webapp:1.1
+    ports: 
+      - 8081:8080
+    networks:
+      - cloud-project-network
+    depends_on:
+      - cloud-project-postgres-2
+      - cloud-project-webapp
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://cloud-project-postgres-2:5432/cloud_project_db
+      - SPRING_DATASOURCE_USERNAME=kt3_username
+      - SPRING_DATASOURCE_PASSWORD=kt3_password
+      - HELLO_MESSAGE=Hello from app 2
+
+volumes:
+  cloud-project-postgres-data:
+    driver: local
+  cloud-project-postgres-data-2:
+    driver: local
+
+networks:
+  cloud-project-network:
+    driver: bridge
