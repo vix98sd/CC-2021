@@ -30,4 +30,4 @@ jobs:
         with:
           context: kontrolna_tacka_1_spring_boot/webapp
           push: true
-          tags: user/app:latest
+          tags: vix98sd/cloud-project-webapp:latest
