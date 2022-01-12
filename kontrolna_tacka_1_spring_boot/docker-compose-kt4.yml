@@ -18,8 +18,8 @@ services:
     #   context: webapp
     #   dockerfile: Dockerfile
     image: vix98sd/cloud-project-webapp:latest
-    ports: 
-      - 8080:8080
+    # ports: 
+    #   - 8080:8080
     networks:
       - cloud-project-network
     depends_on:
@@ -48,8 +48,8 @@ services:
     #   context: webapp
     #   dockerfile: Dockerfile
     image: vix98sd/cloud-project-webapp:latest
-    ports: 
-      - 8081:8080
+    # ports: 
+    #   - 8081:8080
     networks:
       - cloud-project-network
     depends_on:
@@ -60,6 +60,21 @@ services:
       - SPRING_DATASOURCE_USERNAME=kt3_username
       - SPRING_DATASOURCE_PASSWORD=kt3_password
       - HELLO_MESSAGE=Hello from app 2
+
+  nginx-server:
+    container_name: nginx-server
+    image: nginx:alpine
+    ports: 
+        - "8080:80"
+    volumes: 
+        - './nginx/:/etc/nginx/'
+    networks: 
+      - cloud-project-network
+    depends_on: 
+      - cloud-project-postgres
+      - cloud-project-webapp
+      - cloud-project-postgres-2
+      - cloud-project-webapp-2
 
 volumes:
   cloud-project-postgres-data:
