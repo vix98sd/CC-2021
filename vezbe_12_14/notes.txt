@@ -1,0 +1,3 @@
+Docker volumes
+
+bind mount - vezuje container za filesystem 
