@@ -1,0 +1,31 @@
+# Vagrant.configure("2") do |config|
+#     config.vm.box = 'hashicorp/bionic64'
+#     config.vm.provision "file", source: ".", destination: "$HOME/kt2"
+#     # config.vm.provision "shell", path: "vagrantInit.sh"
+# end
+Vagrant.configure("2") do |config|
+
+    config.vm.box = "ubuntu/bionic64"
+    config.vm.network "private_network", ip: "10.10.10.10"
+
+    # require plugin https://github.com/leighmcculloch/vagrant-docker-compose
+    config.vagrant.plugins = "vagrant-docker-compose"
+  
+    # install docker and docker-compose
+    config.vm.provision :docker
+    config.vm.provision :docker_compose
+
+    # transfer code
+    config.vm.provision "file", source: ".", destination: "$HOME/kt2", :run => 'always'
+    
+    # run scripts
+    config.vm.provision "shell", path: "vagrantEnv.sh"
+    config.vm.provision "shell", path: "vagrantInit.sh"
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
+      vb.customize ["modifyvm", :id, "--cpus", "2"]
+    end
+  
+  end

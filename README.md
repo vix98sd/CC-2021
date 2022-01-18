@@ -1,5 +1,15 @@
-# CC-2021
-Stepanoski Vanja E2 10/2021
+# CC-2021 - Stepanoski Vanja E2 10/2021
+
+# Kontrolna tacka 4
+
+## Kako pokrenuti
+
+- [ ] pokrenuti komandu -> vagrant up --provision
+
+## Kako proveriti da li radi
+
+- [ ] otici na adresu -> http://10.10.10.10:8080/counters
+- [ ] za proveru load balacera reloadovati stranicu više puta i pratiti poruku koja se ispisuje
 
 # Kontrolna tacka 3
 

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd kt2
-docker-compose -f docker-compose.yml up -d
+cd kt4
+docker-compose -f docker-compose-kt4.yml up -d
